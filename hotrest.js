@@ -8,37 +8,62 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var tables = [];
-var waitList = [];
-var table = {
-    "name": "Tim",
-    "phone": "867-5309",
-    "email": "tim@gmail.com",
-    "id": "Keyboard Cat"
-}
+var reservations = [];
 
-tables[0] = table;
-console.log (tables);
-
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "home.html"));
-  });
-  
-  app.get("/tables", function(req, res) {
+});
+
+app.get("/tables", function (req, res) {
     res.sendFile(path.join(__dirname, "tables.html"));
-  });
-  
-  app.get("/reserve", function(req, res) {
+});
+
+app.get("/reserve", function (req, res) {
     res.sendFile(path.join(__dirname, "reserve.html"));
-  });
-  
-  app.get("/api/tables", function(req, res) {
-    return res.json(tables);
-  });
-  
-  app.get("/api/waitlist", function(req, res) {
-    
-  });
+});
+
+app.get("/api/tables", function (req, res) {
+    var reserve = req.params.reservations;
+    if (reserve) {
+        console.log(reserve);
+
+        for (var i = 0; i < 5; i++) {
+            if (reserve === reservations[i].routeName) {
+                return res.json(reservations[i]);
+            }
+        }
+        return res.json(false);
+    }
+    return res.json(reservations);
+});
+
+app.get("/api/waitlist", function (req, res) {
+    var reserve = req.params.reservations;
+    if (reserve) {
+        console.log(reserve);
+
+        for (var i = 5; i < reservations.length; i++) {
+            if (reserve === reservations[i].routeName) {
+                return res.json(reservations[i]);
+            }
+        }
+        return res.json(false);
+    }
+    return res.json(reservations);
+});
+
+
+app.post("/api/new", function (req, res) {
+    newreservation = req.body;
+    newreservation.routeName = newreservation.name.replace(/\s/ + g, "").toLowerCase();
+    console.log(newreservation);
+    reservations.push(newreservation);
+    res.json(newreservation)
+});
+
+
+
+
 
 
 
