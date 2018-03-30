@@ -24,53 +24,31 @@ app.get("/reserve", function (req, res) {
 
 app.get("/api/tables", function (req, res) {
     var reserve = req.params.reservations;
-    if (reserve) {
-        console.log(reserve);
-
-        for (var i = 0; i < 5; i++) {
-            if (reserve === reservations[i].routeName) {
-                return res.json(reservations[i]);
-            }
-        }
-        return res.json(false);
-    }
     return res.json(reservations);
 });
 
 app.get("/api/waitlist", function (req, res) {
     var reserve = req.params.reservations;
-    if (reserve) {
-        console.log(reserve);
-
-        for (var i = 5; i < reservations.length; i++) {
-            if (reserve === reservations[i].routeName) {
-                return res.json(reservations[i]);
-            }
-        }
-        return res.json(false);
-    }
-    return res.json(reservations);
+    return res.json(waitlist);
 });
 
 
 app.post("/api/new", function (req, res) {
     var newreservation = req.body;
-    newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
+    
     console.log(newreservation);
-    if (reservations.length > 5) {
+    if (reservations.length > 4) {
+        waitlist.push(newreservation);
         newreservation.onWaitList = true;
         //alert("Sorry, but you are on the waitlist.")
     } else {
         newreservation.onWaitList = false;
+        reservations.push(newreservation);
         //alert("Congratulations, you got a table reserved at Charlotte's hottest new restaurant!");
     }
-    reservations.push(newreservation);
     console.log(reservations);
     res.json(newreservation);
 });
-
-
-
 
 
 
