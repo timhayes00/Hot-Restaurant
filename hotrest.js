@@ -54,11 +54,19 @@ app.get("/api/waitlist", function (req, res) {
 
 
 app.post("/api/new", function (req, res) {
-    newreservation = req.body;
-    newreservation.routeName = newreservation.name.replace(/\s/ + g, "").toLowerCase();
+    var newreservation = req.body;
+    newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
     console.log(newreservation);
+    if(reservations.length > 5){
+        newreservation.onWaitList = true;
+        alert("Sorry, but you are on the waitlist.")
+    } else{
+        newreservation.onWaitList = false;
+        alert("Congratulations, you got a table reserved at Charlotte's hottest new restaurant!");
+    }
     reservations.push(newreservation);
-    res.json(newreservation)
+    console.log(reservations);
+    res.json(newreservation);
 });
 
 
