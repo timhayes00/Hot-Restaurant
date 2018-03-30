@@ -1,0 +1,8 @@
+DROP DATABASE IF EXISTS hot_restDB;
+CREATE DATABASE hot_restDB;
+USE hot_restDB;
+
+CREATE TABLE tops(
+  item_id INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (item_id)
+);
