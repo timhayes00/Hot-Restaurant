@@ -1,73 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery.js"></script>
     <title>Tables</title>
 </head>
-<body>
 
-    <div class = container>
+<body>
+    <div class="container">
         <div class="jumbotron jumbotron-fluid">
             <div class="container" style="text-align: center">
                 <h1 class="display-4">Hot Restaurant</h1>
                 <p class="lead">Current Reservations and Waiting List</p>
-                <a href="/reserve"><button type="button" class="btn btn-primary btn-lg">Make Reservation</button></a>
-                <a href="/"><button type="button" class="btn btn-secondary btn-lg">Home</button></a>
+                <a href="/reserve">
+                    <button type="button" class="btn btn-primary btn-lg">Make Reservation</button>
+                </a>
+                <a href="/">
+                    <button type="button" class="btn btn-secondary btn-lg">Home</button>
+                </a>
             </div>
         </div>
-
-    <div class="card">
-        <div class="card-header">
-            Current Reservations
+        <div class="card">
+            <div class="card-header">
+                Current Reservations
+            </div>
+            <div class="card-body reservations">
+            </div>
         </div>
-        <div class="card-body reservations">
-            
+        <div class="card">
+            <div class="card-header">
+                Waitlist
+            </div>
+            <div class="card-body waitlist">
+            </div>
         </div>
+        <p>
+            Control Panel
+        </p>
+        <p>
+            <a href="/api/tables">API Table Link</a>
+            <a href="/api/waitlist">API Wait List</a>
+        </p>
     </div>
 
-    <div class="card">
-        <div class="card-header">
-            Waitlist
-        </div>
-        <div class="card-body waitlist">
-            
-        </div>
-    </div>
-
-    <p>
-        Control Panel
-    </p>
-    <p>    
-        API Table Link
-        API Wait List
-    </p>
 
     <script type="text/javascript">
-       
-        
-    //     $.get("/api/tables", function(data) {
-    //     console.log(data);
-    //     if (data) {
-    //       var newRow = $("<div class='table-row'>");
-    //       var newRowText = $("<h3>" + data.id)
+        $.get("/api/tables", function (data) {
+            console.log(data);
+            if (data) {
+                for (i = 0; i < 5; i++) {
+                    var newRow = $("<div class='table-row'>");
+                    var newRowText = $("<h3>" + data[i].id + "</h3>");
+                    var badge = $("<span class = 'badge badge-primary'>" + (i + 1) + "</span>");
+                    newRowText.prepend(badge);
+                    newRow.append(newRowText);
+                    $(".reservations").append(newRow);
+                }
+            }
+        });
 
-          
-    //         $("#stats").show();
-    //       $("#name").text(data.name);
-    //       $("#role").text(data.role);
-    //       $("#age").text(data.age);
-    //       $("#force-points").text(data.forcePoints);
-    //     }
-    //     else {
-    //       $("#name").text("The force is not strong with this one. Your character was not found.");
-    //       $("#stats").hide();
-    //     }
-    //   });
-    
+        $.get("/api/waitlist", function (data) {
+            console.log(data);
+            if (data) {
+                for (i = 5; i < data.length; i++) {
+                    var newRow = $("<div class='table-row'>");
+                    var newRowText = $("<h3>" + data[i].id + "</h3>");
+                    var badge = $("<span class = 'badge badge-primary'>" + (i - 4) + "</span>");
+                    newRowText.prepend(badge);
+                    newRow.append(newRowText);
+                    $(".waitlist").append(newRow);
+                }
+            }
+        });
     </script>
 </body>
+
 </html>

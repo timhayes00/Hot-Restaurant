@@ -57,12 +57,12 @@ app.post("/api/new", function (req, res) {
     var newreservation = req.body;
     newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
     console.log(newreservation);
-    if(reservations.length > 5){
+    if (reservations.length > 5) {
         newreservation.onWaitList = true;
-        alert("Sorry, but you are on the waitlist.")
-    } else{
+        //alert("Sorry, but you are on the waitlist.")
+    } else {
         newreservation.onWaitList = false;
-        alert("Congratulations, you got a table reserved at Charlotte's hottest new restaurant!");
+        //alert("Congratulations, you got a table reserved at Charlotte's hottest new restaurant!");
     }
     reservations.push(newreservation);
     console.log(reservations);
@@ -75,6 +75,6 @@ app.post("/api/new", function (req, res) {
 
 
 
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("Server listening on http://localhost:" + PORT);
-  });
+});
