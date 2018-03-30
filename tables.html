@@ -69,8 +69,8 @@
             if (data) {
                 for (i = 5; i < data.length; i++) {
                     var newRow = $("<div class='table-row'>");
-                    var newRowText = $("<h3>" + data[i].id + "</h3>");
-                    var badge = $("<span class = 'badge badge-primary'>" + (i - 4) + "</span>");
+                    var newRowText = $("<h3>  | " + data[i].id + "</h3>");
+                    var badge = $("<span class = 'badge badge-primary'>" + (i + 1) + "</span>");
                     newRowText.prepend(badge);
                     newRow.append(newRowText);
                     $(".waitlist").append(newRow);

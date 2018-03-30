@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var reservations = [];
+var waitlist = [];
 
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "home.html"));
